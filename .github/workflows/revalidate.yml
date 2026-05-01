@@ -1,0 +1,17 @@
+name: Revalidate site (poll Notion)
+
+on:
+  schedule:
+    # Every 5 minutes
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+jobs:
+  revalidate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hit revalidate endpoint
+        run: |
+          curl -fsS -X POST \
+            "${{ secrets.SITE_URL }}/api/revalidate?secret=${{ secrets.REVALIDATE_SECRET }}" \
+            -o /dev/null -w "HTTP %{http_code}\n"
