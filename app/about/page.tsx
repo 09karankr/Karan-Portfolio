@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Container } from "@/components/Container";
 import { SkillsGrid } from "@/components/SkillsGrid";
+import { Stats } from "@/components/Stats";
 import { profile } from "@/content/profile";
 
 export const metadata: Metadata = { title: "About" };
@@ -13,6 +14,11 @@ export default function AboutPage() {
       <div className="prose prose-invert max-w-prose mb-12">
         <p className="text-lg text-muted leading-relaxed">{profile.summary}</p>
       </div>
+
+      <section className="mb-12">
+        <h2 className="text-xl font-semibold tracking-tight mb-4">By the numbers</h2>
+        <Stats />
+      </section>
 
       <section className="mb-12">
         <h2 className="text-xl font-semibold tracking-tight mb-4">Skills</h2>

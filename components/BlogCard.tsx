@@ -1,9 +1,15 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Clock } from "lucide-react";
 import { formatDate } from "@/lib/utils";
 import type { BlogPostMeta } from "@/lib/notion";
 
-export function BlogCard({ post }: { post: BlogPostMeta }) {
+export function BlogCard({
+  post,
+  readingMinutes,
+}: {
+  post: BlogPostMeta;
+  readingMinutes?: number;
+}) {
   return (
     <Link
       href={`/blog/${post.slug}`}
@@ -15,9 +21,16 @@ export function BlogCard({ post }: { post: BlogPostMeta }) {
         </h3>
         <ArrowRight className="size-4 text-muted shrink-0 group-hover:text-accent transition-colors" />
       </div>
-      <p className="font-mono text-xs text-muted mb-3">
-        {post.publishedAt ? formatDate(post.publishedAt) : "Draft"}
-      </p>
+      <div className="flex flex-wrap items-center gap-3 font-mono text-xs text-muted mb-3">
+        <span>
+          {post.publishedAt ? formatDate(post.publishedAt) : "Draft"}
+        </span>
+        {typeof readingMinutes === "number" && (
+          <span className="inline-flex items-center gap-1">
+            <Clock className="size-3" /> {readingMinutes} min read
+          </span>
+        )}
+      </div>
       {post.excerpt && (
         <p className="text-sm text-muted leading-relaxed mb-4 line-clamp-2">
           {post.excerpt}

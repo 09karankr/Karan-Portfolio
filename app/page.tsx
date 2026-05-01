@@ -5,13 +5,23 @@ import { Hero } from "@/components/Hero";
 import { ProjectCard } from "@/components/ProjectCard";
 import { BlogCard } from "@/components/BlogCard";
 import { featuredProjects } from "@/content/projects";
-import { getAllPosts } from "@/lib/notion";
+import { getAllPosts, getPostBySlug } from "@/lib/notion";
+import { readingTimeMinutes } from "@/lib/utils";
 
 export const revalidate = 3600;
 
 export default async function HomePage() {
   const posts = await getAllPosts();
-  const recentPosts = posts.slice(0, 3);
+  const recentMeta = posts.slice(0, 3);
+  const recentPosts = await Promise.all(
+    recentMeta.map(async (m) => {
+      const full = await getPostBySlug(m.slug);
+      return {
+        meta: m,
+        minutes: full ? readingTimeMinutes(full.markdown) : undefined,
+      };
+    }),
+  );
 
   return (
     <Container>
@@ -50,8 +60,8 @@ export default async function HomePage() {
             </Link>
           </div>
           <div className="grid gap-4">
-            {recentPosts.map((post) => (
-              <BlogCard key={post.id} post={post} />
+            {recentPosts.map(({ meta, minutes }) => (
+              <BlogCard key={meta.id} post={meta} readingMinutes={minutes} />
             ))}
           </div>
         </section>

@@ -1,12 +1,20 @@
+import Link from "next/link";
 import { ArrowUpRight, Github } from "lucide-react";
 import type { Project } from "@/content/projects";
 
 export function ProjectCard({ project }: { project: Project }) {
   return (
-    <article className="group rounded-lg border border-border bg-card/50 p-6 hover:border-accent/60 transition-colors">
+    <article className="group relative rounded-lg border border-border bg-card/50 p-6 hover:border-accent/60 transition-colors">
       <div className="flex items-start justify-between gap-4 mb-2">
-        <h3 className="text-lg font-medium tracking-tight">{project.title}</h3>
-        <div className="flex items-center gap-2 shrink-0">
+        <h3 className="text-lg font-medium tracking-tight">
+          <Link
+            href={`/projects/${project.slug}`}
+            className="after:absolute after:inset-0 group-hover:text-accent transition-colors"
+          >
+            {project.title}
+          </Link>
+        </h3>
+        <div className="relative z-10 flex items-center gap-2 shrink-0">
           {project.github && (
             <a
               href={project.github}

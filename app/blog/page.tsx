@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Container } from "@/components/Container";
-import { BlogCard } from "@/components/BlogCard";
+import { TagFilter } from "@/components/TagFilter";
 import { getAllPosts, notionEnabled } from "@/lib/notion";
 
 export const metadata: Metadata = { title: "Blog" };
@@ -28,11 +28,7 @@ export default async function BlogPage() {
           body="Add a row to your Notion blog database with Status = Published, then redeploy or hit /api/revalidate."
         />
       ) : (
-        <div className="grid gap-4">
-          {posts.map((post) => (
-            <BlogCard key={post.id} post={post} />
-          ))}
-        </div>
+        <TagFilter posts={posts} />
       )}
     </Container>
   );

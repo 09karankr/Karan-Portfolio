@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @import "highlight.js/styles/github-dark.css";
+@import "katex/dist/katex.min.css";
 
 :root {
   --bg: 9 9 11;
@@ -43,6 +44,54 @@
 
   .gradient-text {
     @apply bg-gradient-to-br from-fg to-muted bg-clip-text text-transparent;
+  }
+}
+
+@media print {
+  /* Strip site chrome so the page prints clean */
+  [data-print-hide],
+  [data-print-hide] * {
+    display: none !important;
+  }
+
+  /* Force light page background, dark text — printers hate dark themes */
+  html,
+  body {
+    background: #ffffff !important;
+    color: #111111 !important;
+    background-image: none !important;
+  }
+
+  body {
+    font-size: 11pt;
+  }
+
+  a {
+    color: #111111 !important;
+    text-decoration: none !important;
+  }
+
+  /* On the resume page, hide the embedded PDF viewer + buttons —
+     printing the PDF directly is what the Download button is for. */
+  body[data-page="resume"] [data-print-only-text],
+  body[data-page="resume"] [data-print-only-text] * {
+    color: #111111 !important;
+  }
+
+  body[data-page="resume"] [data-print-hide-on-resume],
+  body[data-page="resume"] [data-print-hide-on-resume] * {
+    display: none !important;
+  }
+
+  /* Avoid awkward page breaks inside cards */
+  section,
+  article,
+  .rounded-lg {
+    break-inside: avoid;
+  }
+
+  @page {
+    margin: 0.5in;
   }
 }
 

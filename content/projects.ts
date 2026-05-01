@@ -1,3 +1,10 @@
+export type CaseStudy = {
+  problem: string;
+  approach: string[];
+  outcomes: string[];
+  learnings?: string;
+};
+
 export type Project = {
   slug: string;
   title: string;
@@ -8,6 +15,7 @@ export type Project = {
   github?: string;
   demo?: string;
   featured?: boolean;
+  caseStudy?: CaseStudy;
 };
 
 export const projects: Project[] = [
@@ -24,6 +32,24 @@ export const projects: Project[] = [
       "Orchestrated multi-step LLM workflows using LangChain agents and tool-calling, enabling structured query decomposition, function execution, and grounded responses via the OpenAI API.",
     ],
     featured: true,
+    caseStudy: {
+      problem:
+        "Domain experts at the org couldn't answer questions across hundreds of internal docs without re-reading them. Generic LLMs hallucinated and lacked citations, making answers untrustworthy.",
+      approach: [
+        "Ingested 100+ documents and chunked them into ~512-token segments with overlap to preserve context across chunk boundaries.",
+        "Generated dense embeddings using sentence-transformers and indexed them in FAISS for sub-second cosine-similarity search.",
+        "Built a LangChain agent that decomposes a user query into sub-questions, retrieves top-k chunks per sub-question, and synthesizes a grounded answer with citations.",
+        "Fine-tuned a HF transformer on internal QA pairs with LoRA adapters — 4-bit quantized base + adapter weights only — to keep training under 8 GB VRAM on a single GPU.",
+        "Wrapped the pipeline with tool-calling so the LLM can invoke functions (e.g., date lookup, table query) instead of guessing structured data.",
+      ],
+      outcomes: [
+        "Sub-second semantic retrieval over 100+ docs.",
+        "~60% reduction in training memory footprint via LoRA.",
+        "Every answer cites the source chunks, eliminating hallucination on questions inside the corpus.",
+      ],
+      learnings:
+        "LoRA + 4-bit quantization is the right starting point when GPU is the bottleneck. Tool-calling beats prompting for anything structured (dates, IDs, calculations). FAISS is overkill for <10k chunks but cheap to start with.",
+    },
   },
   {
     slug: "devops-cicd-pipeline",
@@ -38,6 +64,24 @@ export const projects: Project[] = [
       "Implemented Trivy container security scanning and Prometheus-Grafana monitoring, achieving a 90% reduction in deployment effort.",
     ],
     featured: true,
+    caseStudy: {
+      problem:
+        "Manual deployments to a Kubernetes cluster on AWS were error-prone, slow, and missed security checks. Each new microservice required engineers to repeat ~80% of the same setup.",
+      approach: [
+        "Codified the entire AWS substrate (VPC, EKS, IAM, S3) in Terraform — one apply provisions a fresh environment.",
+        "Used Ansible for post-provisioning config (Jenkins, Nexus, SonarQube on a control-plane VM).",
+        "Built a 10+ stage Jenkins pipeline: checkout → unit test → SonarQube → Maven build → Docker build → Trivy scan → Nexus push → Helm deploy to EKS → Prometheus scrape config update.",
+        "Pinned every tool version and wrote pipeline-as-code in Jenkinsfile so onboarding a new service is a copy-paste of ~30 lines.",
+        "Wired Prometheus + Grafana for app and pipeline metrics; alerts for failed deploys and stuck pods.",
+      ],
+      outcomes: [
+        "Setup time for a new microservice cut by ~80%.",
+        "Deployment effort reduced ~90% via pipeline automation.",
+        "Trivy gate blocks images with critical CVEs from reaching prod.",
+      ],
+      learnings:
+        "The Terraform + Ansible split is worth it: Terraform owns infra state, Ansible owns config drift. Putting security scanning early (pre-Nexus) means you don't waste artifacts you can't deploy. Helm is great for templating but resist the urge to template everything — keep app-specific values minimal.",
+    },
   },
   {
     slug: "course-management-platform",

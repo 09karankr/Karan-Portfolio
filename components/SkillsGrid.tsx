@@ -8,7 +8,7 @@ export function SkillsGrid() {
           key={category}
           className="rounded-lg border border-border bg-card/50 p-4"
         >
-          <h3 className="text-sm font-medium text-accent mb-3 font-mono">
+          <h3 className="text-xs font-mono text-muted uppercase tracking-wider mb-3">
             {category}
           </h3>
           <div className="flex flex-wrap gap-1.5">

@@ -8,6 +8,7 @@ export type BlogPostMeta = {
   excerpt: string | null;
   tags: string[];
   publishedAt: string | null;
+  lastEditedAt: string | null;
   cover: string | null;
 };
 
@@ -62,7 +63,18 @@ function pageToMeta(page: any): BlogPostMeta | null {
     cover = page.cover.file?.url ?? page.cover.external?.url ?? null;
   }
 
-  return { id: page.id, slug, title, excerpt, tags, publishedAt, cover };
+  const lastEditedAt: string | null = page.last_edited_time ?? null;
+
+  return {
+    id: page.id,
+    slug,
+    title,
+    excerpt,
+    tags,
+    publishedAt,
+    lastEditedAt,
+    cover,
+  };
 }
 
 export async function getAllPosts(): Promise<BlogPostMeta[]> {
