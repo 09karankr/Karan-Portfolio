@@ -82,7 +82,6 @@ export const profile = {
 
   certifications: [
     "AWS Certified Cloud Practitioner (CCP)",
-    "Google Cloud Innovator",
     "GitHub Foundations Certification",
     "Docker Hands-On: Containerization Fundamentals",
   ],
@@ -99,16 +98,29 @@ export const profile = {
   // Used by the /now page. Edit freely as your focus changes.
   // (See https://nownownow.com for the convention.)
   now: {
-    updatedAt: "2026-05-02",
+    updatedAt: "2026-06-01T00:00:00Z", // RFC3339 format — required
     workingOn: [
-      "Shipping containerized Next.js services on GCP at Capgemini",
-      "Optimizing API response latency with BigQuery + caching layers",
+      "Enhancing next js backend services with SQL and BigQuery for efficient data processing and improved API response latency.",
+      "Also working on bug fixes and performance optimizations for existing services, leveraging my full-stack JS/TS skills and cloud experience.",
+      "",
     ],
     learning: [
-      "PyTorch fundamentals — tensors, autograd, training loops",
+      "PyTorch fundamentals — tensors, autograd, training loops, testing loops, forward and backward passes, backpropagation, optimizers, and more.",
+      "Classification Neural Networks (CNNs) and transformer architectures for NLP tasks, setting up loss functions and optimization strategies.",
+      "Convolutional Neural Networks (CNNs), Data Loaders, confusion matrices, and evaluation metrics for image classification tasks.",
+      "Custom datasets, imagefolder structure, Data augmentation with torchvision.",
+      "Pytorch transfer learning",
+      "Transformer architecture, attention mechanisms, embeddings, encoders, decoders etc",
       "LangChain agents and tool-calling patterns",
-      "RAG architectures with FAISS and sentence-transformers",
-      "Fine-tuning HF transformers with LoRA on a single GPU",
+      "Retrieval-Augmented Generation (RAG) pipelines with vector databases like FAISS",
+      "Also learning about prompt engineering best practices, few-shot prompting, and evaluation techniques for LLM applications.",
+      "Continuing to deepen my understanding of cloud-native architectures, containerization with Docker, and orchestration with Kubernetes.",
+      "Exploring Terraform for infrastructure as code and Jenkins for CI/CD automation to streamline development workflows.",
+      "Autoscaling groups and load balancing strategies on AWS and GCP to optimize application performance and cost-efficiency.",
+      "AWS ERC, ECS and container orchestration patterns for scalable deployments.",
+      "Monitoring and new relic for observability and performance optimization of cloud applications.",
+      "prometheus and grafana for monitoring and alerting in cloud environments.",
+      "Kubernetes concepts like namespaces, deployments, services, and ingress controllers for managing containerized applications at scale.",
     ],
     reading: [
       // Add books or papers here as you finish them
@@ -126,48 +138,22 @@ export const profile = {
         status: "completed",
         note: "Foundations of containerization, multi-container apps, k8s on AWS.",
       },
-      {
-        title: "AWS Certified Solutions Architect — Associate",
-        source: "Udemy",
-        status: "in-progress",
-        note: "Working toward the SAA-C03 cert; building hands-on labs along the way.",
-      },
-      {
-        title: "Linux Foundation Certified Sysadmin (LFCS)",
-        source: "Linux Foundation",
-        status: "in-progress",
-        note: "Core Linux administration: networking, storage, services, automation.",
-      },
+     
+     
       {
         title: "100xDevs — Cohort 2.0",
         source: "Harkirat Singh",
-        status: "completed",
-        note: "Full-stack JS/TS deep-dive — React, Node, Postgres, system design.",
-      },
-      {
-        title: "TypeScript",
-        source: "Self-study + docs",
-        status: "completed",
-        note: "Generics, narrowing, conditional types, satisfies operator.",
-      },
-      {
-        title: "PyTorch + Hugging Face essentials",
-        source: "Official tutorials + papers",
         status: "in-progress",
-        note: "Tensors, autograd, training loops, LoRA fine-tuning, transformers.",
+        note: "Full-stack JS/TS deep-dive — React, Node, MongoDB, system design, DevOps.",
       },
+     
       {
-        title: "LangChain agents & RAG",
-        source: "LangChain docs + LangSmith",
+        title: "PyTorch",
+        source: "Official tutorials + udemy courses",
         status: "in-progress",
-        note: "Agent loops, tool-calling, retrieval pipelines, evaluation.",
+        note: "Tensors, autograd, training loops, LoRA fine-tuning, transformers and many more.",
       },
-      {
-        title: "Terraform — Infrastructure as Code",
-        source: "HashiCorp Learn",
-        status: "completed",
-        note: "Modules, state management, remote backends, multi-environment patterns.",
-      },
+      
     ] as ReadingItem[],
 
     papers: [
@@ -182,6 +168,21 @@ export const profile = {
 
     articles: [
       // Add notable articles/blog posts here.
+      {
+        title: "Transformer Architecture Explained",
+        source: "Medium",
+        url: "https://medium.com/@amanatulla1606/transformer-architecture-explained-2c49e2257b4c",
+        status: "completed",
+        note: "In-depth explanation of the transformer architecture and its components.",
+      },
+      {
+        title: "ML Foundations",
+        source: "Kunal Singh's blog",
+        url: "https://knl.co.in/blog/ml-foundations/",
+        status: "completed",
+        note: "Foundational concepts in machine learning and deep learning.",
+      },
+      
     ] as ReadingItem[],
   },
 };
