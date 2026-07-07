@@ -98,7 +98,7 @@ export const profile = {
   // Used by the /now page. Edit freely as your focus changes.
   // (See https://nownownow.com for the convention.)
   now: {
-    updatedAt: "2026-06-01T00:00:00Z", // RFC3339 format — required
+    updatedAt: "2026-07-01T00:00:00Z", // RFC3339 format — required
     workingOn: [
       "Enhancing next js backend services with SQL and BigQuery for efficient data processing and improved API response latency.",
       "Also working on bug fixes and performance optimizations for existing services, leveraging my full-stack JS/TS skills and cloud experience.",
