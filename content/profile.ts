@@ -19,6 +19,17 @@ export const profile = {
   companyUrl: "https://www.capgemini.com",
   companyColor: "#0070AD",
 
+  // Availability banner + Cal.com booking.
+  // Set open: false to hide the banner. Set calUsername to your cal.com handle
+  // (e.g. "karan-kumar" from cal.com/karan-kumar) to enable one-click booking;
+  // leave null to fall back to the contact page.
+  availability: {
+    open: true,
+    role: "Software Engineer / AI Engineer",
+    calUsername: null as string | null,
+    calEvent: "15min", // cal.com event slug, e.g. cal.com/<user>/15min
+  },
+
   summary:
     "Software Engineer at Capgemini with hands-on experience in GCP, Docker, Kubernetes, and full-stack JavaScript/TypeScript. Currently learning the modern AI/ML stack — PyTorch, Hugging Face, LangChain, and RAG-based LLM applications. Strong CS fundamentals with 400+ DSA problems solved on CodeChef and LeetCode.",
 

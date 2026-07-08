@@ -3,6 +3,8 @@ import { Inter, JetBrains_Mono } from "next/font/google";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { PageTransition } from "@/components/PageTransition";
+import { AvailabilityBanner } from "@/components/AvailabilityBanner";
+import { ChatWidget } from "@/components/ChatWidget";
 import { profile } from "@/content/profile";
 import "./globals.css";
 
@@ -51,11 +53,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${mono.variable}`}>
       <body className="min-h-screen flex flex-col">
+        <AvailabilityBanner />
         <Navbar />
         <main className="flex-1">
           <PageTransition>{children}</PageTransition>
         </main>
         <Footer />
+        <ChatWidget />
       </body>
     </html>
   );

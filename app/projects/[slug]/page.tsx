@@ -1,9 +1,52 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowUpRight, Github } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowUpRight,
+  Boxes,
+  Brain,
+  Code2,
+  Github,
+  Radio,
+  Server,
+} from "lucide-react";
 import { Container } from "@/components/Container";
 import { projects } from "@/content/projects";
+import type { ProjectCategory } from "@/content/projects";
+
+const categoryIcon: Record<ProjectCategory, typeof Brain> = {
+  "AI/ML": Brain,
+  DevOps: Server,
+  "Full-Stack": Code2,
+  "Real-Time": Radio,
+};
+
+const categoryTone: Record<
+  ProjectCategory,
+  { text: string; ring: string; bg: string }
+> = {
+  "AI/ML": {
+    text: "text-fuchsia-300",
+    ring: "ring-fuchsia-500/20",
+    bg: "bg-fuchsia-500/5",
+  },
+  DevOps: {
+    text: "text-sky-300",
+    ring: "ring-sky-500/20",
+    bg: "bg-sky-500/5",
+  },
+  "Full-Stack": {
+    text: "text-emerald-300",
+    ring: "ring-emerald-500/20",
+    bg: "bg-emerald-500/5",
+  },
+  "Real-Time": {
+    text: "text-amber-300",
+    ring: "ring-amber-500/20",
+    bg: "bg-amber-500/5",
+  },
+};
 
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
@@ -17,10 +60,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const project = projects.find((p) => p.slug === slug);
   if (!project) return { title: "Project not found" };
-  return {
-    title: project.title,
-    description: project.summary,
-  };
+  return { title: project.title, description: project.summary };
 }
 
 export default async function ProjectDetailPage({
@@ -32,6 +72,9 @@ export default async function ProjectDetailPage({
   const project = projects.find((p) => p.slug === slug);
   if (!project) notFound();
 
+  const Icon = categoryIcon[project.category] ?? Boxes;
+  const tone = categoryTone[project.category];
+
   return (
     <Container className="py-16 max-w-3xl">
       <Link
@@ -42,13 +85,21 @@ export default async function ProjectDetailPage({
       </Link>
 
       <header className="mb-10">
+        <span
+          className={`inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-[11px] font-mono uppercase tracking-wider ring-1 ${tone.text} ${tone.ring} ${tone.bg} mb-4`}
+        >
+          <Icon className="size-3" />
+          {project.category}
+        </span>
+
         <h1 className="text-4xl font-semibold tracking-tight text-balance mb-3">
           {project.title}
         </h1>
         <p className="font-mono text-sm text-muted mb-4">{project.period}</p>
-        <p className="text-lg text-muted leading-relaxed mb-5">
+        <p className="text-lg text-muted leading-relaxed mb-6 max-w-2xl">
           {project.summary}
         </p>
+
         <div className="flex flex-wrap items-center gap-3">
           <div className="flex flex-wrap gap-1.5">
             {project.stack.map((s) => (
@@ -85,18 +136,42 @@ export default async function ProjectDetailPage({
         </div>
       </header>
 
+      {/* Impact metric strip */}
+      <section className="grid grid-cols-3 gap-3 mb-14">
+        {project.metrics.map((m) => (
+          <div
+            key={m.label}
+            className="rounded-xl border border-border bg-card/40 p-5"
+          >
+            <p className="text-2xl sm:text-3xl font-semibold tracking-tight">
+              {m.value}
+            </p>
+            <p className="mt-1 text-[11px] font-mono text-muted uppercase tracking-wider leading-tight">
+              {m.label}
+            </p>
+          </div>
+        ))}
+      </section>
+
       {project.caseStudy ? (
-        <article className="space-y-10">
+        <article className="space-y-12">
           <Section title="Problem">
-            <p className="text-muted leading-relaxed">
+            <p className="text-muted leading-relaxed text-base">
               {project.caseStudy.problem}
             </p>
           </Section>
 
           <Section title="Approach">
-            <ol className="space-y-3 text-muted leading-relaxed list-decimal pl-5 marker:text-accent/60 marker:font-mono">
+            <ol className="space-y-4">
               {project.caseStudy.approach.map((step, i) => (
-                <li key={i}>{step}</li>
+                <li key={i} className="flex gap-4">
+                  <span
+                    className={`shrink-0 grid place-items-center size-7 rounded-full font-mono text-xs ring-1 ${tone.text} ${tone.ring} ${tone.bg}`}
+                  >
+                    {i + 1}
+                  </span>
+                  <p className="text-muted leading-relaxed pt-0.5">{step}</p>
+                </li>
               ))}
             </ol>
           </Section>
@@ -111,9 +186,9 @@ export default async function ProjectDetailPage({
 
           {project.caseStudy.learnings && (
             <Section title="Learnings">
-              <p className="text-muted leading-relaxed italic">
+              <blockquote className="border-l-2 border-border pl-4 italic text-muted leading-relaxed">
                 {project.caseStudy.learnings}
-              </p>
+              </blockquote>
             </Section>
           )}
         </article>
@@ -141,7 +216,7 @@ function Section({
 }) {
   return (
     <section>
-      <h2 className="text-xs font-mono text-muted mb-3 uppercase tracking-wider">
+      <h2 className="text-xs font-mono text-muted mb-4 uppercase tracking-wider">
         {title}
       </h2>
       {children}

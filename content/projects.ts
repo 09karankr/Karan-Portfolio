@@ -5,6 +5,9 @@ export type CaseStudy = {
   learnings?: string;
 };
 
+export type ProjectMetric = { value: string; label: string };
+export type ProjectCategory = "AI/ML" | "DevOps" | "Full-Stack" | "Real-Time";
+
 export type Project = {
   slug: string;
   title: string;
@@ -12,6 +15,8 @@ export type Project = {
   stack: string[];
   summary: string;
   bullets: string[];
+  category: ProjectCategory;
+  metrics: ProjectMetric[];
   github?: string;
   demo?: string;
   featured?: boolean;
@@ -20,92 +25,159 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    slug: "ai-rag-assistant",
-    title: "AI RAG Assistant with PyTorch and LangChain",
-    period: "Mar 2026 — Apr 2026",
-    stack: ["Python", "PyTorch", "LangChain", "Hugging Face", "FAISS", "OpenAI API"],
+    slug: "port-logistics-intelligence",
+    title: "Real-Time Port Logistics Intelligence System",
+    period: "June 2026",
+    category: "Real-Time",
+    stack: [
+      "Python",
+      "FastAPI",
+      "TimescaleDB",
+      "PostgreSQL",
+      "Redis",
+      "Celery",
+      "React",
+      "TypeScript",
+      "MapLibre GL",
+      "Docker",
+      "Vercel",
+      "Cloudflare",
+    ],
     summary:
-      "Retrieval-Augmented Generation chatbot with sub-second semantic search and citation-backed answers.",
+      "Production-grade maritime intelligence platform tracking 1,600+ live vessels with sub-second WebSocket streaming and composite risk scoring.",
+    metrics: [
+      { value: "1,600+", label: "vessels tracked live" },
+      { value: "<100ms", label: "analytical queries" },
+      { value: "zero", label: "cloud server cost" },
+    ],
     bullets: [
-      "Built a Retrieval-Augmented Generation (RAG) chatbot ingesting 100+ documents, using sentence-transformer embeddings and FAISS vector search for sub-second semantic retrieval and citation-backed answers.",
-      "Fine-tuned a Hugging Face transformer on domain QA pairs using PyTorch with LoRA adapters, reducing training memory footprint by ~60% on a single GPU.",
-      "Orchestrated multi-step LLM workflows using LangChain agents and tool-calling, enabling structured query decomposition, function execution, and grounded responses via the OpenAI API.",
+      "Architected a production-grade maritime intelligence platform ingesting live global AIS feeds, tracking 1,600+ active vessels in real time and streaming position updates to an interactive world map via WebSocket — achieving sub-second latency across simultaneous connections.",
+      "Designed a composite risk scoring engine (ETA deviation × port congestion × live weather hazards) running on a Celery Beat scheduler every 10 minutes, automatically classifying shipments as LOW / MEDIUM / HIGH risk and dispatching alerts to Slack and email with a configurable cooldown — reducing manual monitoring overhead to zero.",
+      "Modeled a TimescaleDB time-series schema with hypertables, spatial indexes (PostGIS), and continuous aggregates for vessel positions and port congestion, enabling sub-100ms analytical queries over millions of rows without full table scans.",
+      "Deployed a containerized 8-service stack (FastAPI, Celery worker + beat, AIS consumer, vessel simulator, Redis, TimescaleDB, React frontend) using Docker Compose; served the frontend on Vercel and exposed the local API globally via Cloudflare Tunnel — full production setup with zero cloud server cost.",
     ],
     featured: true,
+    github: "https://github.com/09karankr/port-logistics-intelligence",
     caseStudy: {
       problem:
-        "Domain experts at the org couldn't answer questions across hundreds of internal docs without re-reading them. Generic LLMs hallucinated and lacked citations, making answers untrustworthy.",
+        "Global maritime shipping suffers from opaque risk signals — vessel delays, port congestion, and weather hazards compound in ways operators only notice after the fact. Off-the-shelf trackers show positions but not composite risk in real time.",
       approach: [
-        "Ingested 100+ documents and chunked them into ~512-token segments with overlap to preserve context across chunk boundaries.",
-        "Generated dense embeddings using sentence-transformers and indexed them in FAISS for sub-second cosine-similarity search.",
-        "Built a LangChain agent that decomposes a user query into sub-questions, retrieves top-k chunks per sub-question, and synthesizes a grounded answer with citations.",
-        "Fine-tuned a HF transformer on internal QA pairs with LoRA adapters — 4-bit quantized base + adapter weights only — to keep training under 8 GB VRAM on a single GPU.",
-        "Wrapped the pipeline with tool-calling so the LLM can invoke functions (e.g., date lookup, table query) instead of guessing structured data.",
+        "Ingested live global AIS (Automatic Identification System) feeds and normalized them into a TimescaleDB schema with hypertables for vessel positions, PostGIS spatial indexes for geo queries, and continuous aggregates for congestion metrics.",
+        "Streamed real-time vessel positions to a React + MapLibre GL map via WebSocket, handling backpressure so a single connection never drops even under 1,600+ concurrent vessel updates.",
+        "Wrote a composite risk scoring engine: ETA deviation × port congestion × live weather hazards. A Celery Beat scheduler runs it every 10 minutes; results classify shipments as LOW / MEDIUM / HIGH and fire Slack + email alerts with per-shipment cooldown to prevent alert fatigue.",
+        "Packaged the whole system as an 8-service Docker Compose stack: FastAPI, Celery worker, Celery beat, AIS consumer, vessel simulator, Redis, TimescaleDB, and React frontend.",
+        "Deployed the frontend on Vercel and exposed the local API globally via Cloudflare Tunnel — a full production topology with zero cloud server cost.",
       ],
       outcomes: [
-        "Sub-second semantic retrieval over 100+ docs.",
-        "~60% reduction in training memory footprint via LoRA.",
-        "Every answer cites the source chunks, eliminating hallucination on questions inside the corpus.",
+        "Tracks 1,600+ active vessels in real time with sub-second WebSocket latency.",
+        "Analytical queries over millions of rows return in under 100ms thanks to hypertables + continuous aggregates.",
+        "Manual monitoring overhead reduced to zero — the risk engine only pages operators when a shipment actually crosses a threshold.",
       ],
       learnings:
-        "LoRA + 4-bit quantization is the right starting point when GPU is the bottleneck. Tool-calling beats prompting for anything structured (dates, IDs, calculations). FAISS is overkill for <10k chunks but cheap to start with.",
+        "TimescaleDB's hypertables + continuous aggregates make analytical queries on time-series data scale trivially without sharding. Cloudflare Tunnel is an underrated way to expose local services globally without paying for cloud compute. Celery Beat + per-shipment cooldowns is the right primitive for alert engines — don't reinvent scheduling.",
     },
   },
   {
-    slug: "devops-cicd-pipeline",
-    title: "DevOps Ultimate CI/CD Pipeline on AWS",
-    period: "Sep 2025 — Oct 2025",
-    stack: ["AWS", "Jenkins", "Docker", "Kubernetes", "Terraform", "Ansible"],
+    slug: "cold-email-generator",
+    title: "AI-Powered Cold Email Generator",
+    period: "June 2026",
+    category: "AI/ML",
+    stack: [
+      "Python",
+      "Streamlit",
+      "LangChain",
+      "Groq API",
+      "LLaMA 3.3-70B",
+      "ChromaDB",
+      "BeautifulSoup4",
+      "Pandas",
+    ],
     summary:
-      "End-to-end CI/CD pipeline on AWS automating build, test, security scans, and Kubernetes deployments.",
+      "AI outreach tool that scrapes any job URL, extracts structured requirements with LLaMA 3.3-70B, and generates a personalized cold email backed by matched portfolio projects.",
+    metrics: [
+      { value: "LLaMA 3.3", label: "70B params (Groq)" },
+      { value: "20+", label: "portfolio matches" },
+      { value: "RAG", label: "two-step pipeline" },
+    ],
     bullets: [
-      "Built an AWS-based CI/CD pipeline automating build, test, security scans, and Kubernetes deployments for containerized microservices.",
-      "Configured a 10+ stage Jenkins pipeline integrating GitHub, Maven, SonarQube, Nexus, Docker, and Kubernetes; provisioned infrastructure with Terraform and Ansible, reducing setup time by ~80%.",
-      "Implemented Trivy container security scanning and Prometheus-Grafana monitoring, achieving a 90% reduction in deployment effort.",
+      "Built an AI-powered cold email generator using Python, LangChain, and Streamlit that automates personalized outreach for business development.",
+      "Integrated Groq API with Meta's LLaMA 3.3-70B model to extract structured job data (role, skills, experience) from scraped career pages using prompt engineering.",
+      "Implemented a ChromaDB vector store to semantically match job-required skills against a portfolio of 20+ tech-stack/project-link pairs using similarity search.",
+      "Developed a web scraping pipeline with LangChain's WebBaseLoader and regex-based text cleaning to parse any job posting URL.",
+      "Chained multiple LangChain PromptTemplates to build a two-step RAG pipeline: job extraction → context-aware email generation with relevant portfolio links.",
+      "Deployed an interactive Streamlit web UI enabling one-click cold email generation from any job URL.",
     ],
     featured: true,
+    github: "https://github.com/09karankr/ColdEmailGeneratorTool",
+    demo: "https://coldemailgeneratortool-4dvgypxqz5afm55xxkdozf.streamlit.app/",
     caseStudy: {
       problem:
-        "Manual deployments to a Kubernetes cluster on AWS were error-prone, slow, and missed security checks. Each new microservice required engineers to repeat ~80% of the same setup.",
+        "Cold outreach from job postings takes a template every time: copy the JD, find a matching portfolio project, write the email. Doing this manually across dozens of postings a week doesn't scale.",
       approach: [
-        "Codified the entire AWS substrate (VPC, EKS, IAM, S3) in Terraform — one apply provisions a fresh environment.",
-        "Used Ansible for post-provisioning config (Jenkins, Nexus, SonarQube on a control-plane VM).",
-        "Built a 10+ stage Jenkins pipeline: checkout → unit test → SonarQube → Maven build → Docker build → Trivy scan → Nexus push → Helm deploy to EKS → Prometheus scrape config update.",
-        "Pinned every tool version and wrote pipeline-as-code in Jenkinsfile so onboarding a new service is a copy-paste of ~30 lines.",
-        "Wired Prometheus + Grafana for app and pipeline metrics; alerts for failed deploys and stuck pods.",
+        "Built a scraping pipeline with LangChain's WebBaseLoader + regex cleaning that parses arbitrary job posting URLs.",
+        "Ran the cleaned JD through LLaMA 3.3-70B via Groq's API with a structured extraction prompt (role, skills, experience). Groq's throughput makes 70B-parameter inference feel snappy at request time.",
+        "Embedded a portfolio of 20+ (tech-stack, project-link) pairs into ChromaDB. When a JD comes in, semantic similarity picks the most relevant projects to reference.",
+        "Chained two LangChain PromptTemplates: (1) extract structured requirements, (2) generate an email that cites the matched projects — a two-step RAG pipeline.",
+        "Wrapped it all in a Streamlit UI so I paste a URL, click one button, and get the email.",
       ],
       outcomes: [
-        "Setup time for a new microservice cut by ~80%.",
-        "Deployment effort reduced ~90% via pipeline automation.",
-        "Trivy gate blocks images with critical CVEs from reaching prod.",
+        "One-click cold-email generation from any job posting URL — deployed live on Streamlit Cloud.",
+        "Every generated email references real portfolio work matched to the JD's requirements, not generic filler.",
+        "Cut outreach turnaround from ~10 minutes per email to under 30 seconds.",
       ],
       learnings:
-        "The Terraform + Ansible split is worth it: Terraform owns infra state, Ansible owns config drift. Putting security scanning early (pre-Nexus) means you don't waste artifacts you can't deploy. Helm is great for templating but resist the urge to template everything — keep app-specific values minimal.",
+        "Groq's inference speed changes what's feasible at LLM request time — a 70B model is fine to call inline. Two-step chains (extract → generate) hallucinate less than one-shot prompts because the second call operates on structured input. ChromaDB is the right choice when you don't want to run a vector-DB service.",
     },
   },
   {
-    slug: "course-management-platform",
-    title: "Full-Stack Course Management Platform",
-    period: "Jul 2024 — Aug 2024",
-    stack: ["Node.js", "Express", "MongoDB", "JWT", "Zod"],
-    summary:
-      "REST-API-driven course platform with role-based auth and validated input flows.",
-    bullets: [
-      "Built 10+ REST APIs for signup/signin and course CRUD with modular routing and Zod-based input validation, supporting Admin and User flows end-to-end.",
-      "Implemented JWT authentication and bcrypt password hashing, securing user credentials and role-based access across all protected endpoints.",
+    slug: "personal-portfolio",
+    title: "Personal Portfolio & Developer Blog",
+    period: "April 2026",
+    category: "Full-Stack",
+    stack: [
+      "Next.js 15",
+      "TypeScript",
+      "Tailwind CSS",
+      "Notion API",
+      "Framer Motion",
+      "Resend",
+      "Vercel",
     ],
-  },
-  {
-    slug: "video-conferencing",
-    title: "Video Conferencing Application",
-    period: "Dec 2023 — Jan 2024",
-    stack: ["React", "TypeScript", "Node.js", "Express", "WebRTC", "Socket.io"],
     summary:
-      "Real-time, room-based video calls with low-latency peer-to-peer streaming.",
-    bullets: [
-      "Built a real-time video conferencing app with low-latency peer-to-peer audio/video streaming over WebRTC and a room-based architecture supporting multi-user meetings.",
-      "Integrated real-time chat and join/leave notifications via Socket.io to improve meeting collaboration.",
+      "The site you're on — Next.js 15 App Router portfolio with a Notion-backed blog, live GitHub/GFG stats, and on-demand ISR revalidation.",
+    metrics: [
+      { value: "Next 15", label: "App Router + ISR" },
+      { value: "Notion", label: "headless CMS" },
+      { value: "Live", label: "GitHub + GFG APIs" },
     ],
+    bullets: [
+      "Built a full-stack personal portfolio using Next.js 15 App Router with TypeScript and Tailwind CSS, deployed on Vercel with ISR (revalidate=3600) and an on-demand revalidation webhook for near-instant content updates.",
+      "Integrated Notion as a headless CMS for the blog — converts Notion blocks to Markdown via notion-to-md, renders with react-markdown + rehype-highlight for full syntax-highlighted code blocks.",
+      "Wired live GitHub API and GeeksforGeeks API integrations to surface real-time coding stats (repos, stars, followers, DSA problem breakdown by difficulty) using parallel server-side fetches.",
+      "Implemented UX details including Framer Motion page transitions, an IntersectionObserver-based sticky table of contents with active-heading tracking, and a scroll-driven reading progress bar.",
+      "Built a contact form backed by the Resend email API with client-side loading/success/error states, and a /api/revalidate webhook route for Notion-triggered cache purges.",
+    ],
+    github: "https://github.com/09karankr/Karan-Portfolio",
+    demo: "https://www.karan-dev.co.in",
+    caseStudy: {
+      problem:
+        "Wanted a portfolio recruiters could skim in 60 seconds and engineers could dig into for hours — plus a blog I could keep updated without leaving my usual tools. Notion is where my notes already live.",
+      approach: [
+        "Bootstrapped with Next.js 15 App Router + TypeScript + Tailwind, hosted on Vercel. ISR (revalidate=3600) for static-fast rendering with fresh Notion data.",
+        "Wired Notion as a headless CMS via @notionhq/client + notion-to-md, rendering with react-markdown + rehype-highlight so code blocks are syntax-highlighted and every Notion block type is supported.",
+        "Built a /api/revalidate webhook so a GitHub Actions cron (or Notion Automations) can push edits live within minutes — no waiting for the 1h ISR window.",
+        "Server-side fetched GitHub + GeeksforGeeks APIs in parallel, surfacing live coding stats (repos, stars, followers, DSA problem breakdown).",
+        "Layered UX details: Framer Motion page transitions, an IntersectionObserver-based sticky TOC with active-heading tracking, a scroll-driven reading progress bar, a print-friendly resume view, and a hamburger menu on mobile.",
+        "Built the contact form on Resend with client-side loading/success/error states — reply_to set so replies go straight to the sender.",
+      ],
+      outcomes: [
+        "Fresh Notion content appears on the live site within 5 minutes via the revalidate webhook.",
+        "Every page under 150 KB first-load JS. 25 routes pre-rendered at build.",
+        "Zero third-party lock-in — swap Notion for MDX in a day if needed.",
+      ],
+      learnings:
+        "ISR + on-demand revalidation is the sweet spot for content sites — you get static-fast delivery without a 'redeploy on every edit' loop. notion-to-md handles ~95% of Notion blocks perfectly; the last 5% you either accept or write a small custom renderer for. Fetching third-party stats server-side is more reliable than embedding their images (which routinely 503 on free-tier services).",
+    },
   },
 ];
 

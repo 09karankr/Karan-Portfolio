@@ -2,8 +2,12 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, Github, Linkedin } from "lucide-react";
+import { ArrowRight, Github, Linkedin, Sparkles } from "lucide-react";
 import { profile } from "@/content/profile";
+
+function openChat() {
+  window.dispatchEvent(new Event("open-chat"));
+}
 
 export function Hero() {
   const [before, after] = profile.intro.split("{company}");
@@ -26,17 +30,23 @@ export function Hero() {
         </p>
 
         <div className="mt-8 flex flex-wrap items-center gap-3">
+          <button
+            type="button"
+            onClick={openChat}
+            className="group relative inline-flex items-center gap-2 rounded-md bg-accent px-4 py-2 text-sm font-semibold text-bg hover:opacity-90 transition-opacity"
+          >
+            <span
+              aria-hidden
+              className="absolute inset-0 rounded-md bg-accent blur-md opacity-40 group-hover:opacity-60 transition-opacity -z-10"
+            />
+            <Sparkles className="size-4" />
+            Ask my AI anything
+          </button>
           <Link
             href="/projects"
-            className="inline-flex items-center gap-2 rounded-md bg-fg px-4 py-2 text-sm font-medium text-bg hover:opacity-90 transition-opacity"
-          >
-            See projects <ArrowRight className="size-4" />
-          </Link>
-          <Link
-            href="/contact"
             className="inline-flex items-center gap-2 rounded-md border border-border bg-card px-4 py-2 text-sm font-medium hover:border-muted transition-colors"
           >
-            Get in touch
+            See projects <ArrowRight className="size-4" />
           </Link>
           <a
             href={profile.github}
