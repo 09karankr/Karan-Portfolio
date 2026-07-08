@@ -35,9 +35,9 @@ export default function ProjectsPage() {
           <p className="text-xs font-mono text-muted uppercase tracking-wider mb-4">
             More
           </p>
-          <div className="grid gap-5 sm:grid-cols-2">
+          <div className="grid gap-5 lg:grid-cols-2">
             {rest.map((p) => (
-              <ProjectCard key={p.slug} project={p} />
+              <ProjectCard key={p.slug} project={p} variant="featured" />
             ))}
           </div>
         </section>
