@@ -10,6 +10,7 @@ import {
   Send,
 } from "lucide-react";
 import { profile } from "@/content/profile";
+import { XIcon } from "./XIcon";
 import { Container } from "./Container";
 
 const moreLinks = [
@@ -89,6 +90,15 @@ export function Footer() {
               className="text-muted hover:text-fg transition-colors"
             >
               <Linkedin className="size-4" />
+            </a>
+            <a
+              href={profile.x}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="X (Twitter)"
+              className="text-muted hover:text-fg transition-colors"
+            >
+              <XIcon className="size-3.5" />
             </a>
             <a
               href={`mailto:${profile.email}`}

@@ -7,6 +7,7 @@ export const profile = {
   phone: "+91 7903214466",
   github: "https://github.com/09karankr",
   linkedin: "https://linkedin.com/in/karan-kumar-122787226",
+  x: "https://x.com/karan_09kr",
 
   tagline:
     "Software Engineer building cloud-native systems and AI-powered products.",
@@ -88,7 +89,7 @@ export const profile = {
     degree: "B.Tech, Computer Science",
     school: "Technocrats Institute of Technology, Bhopal",
     period: "Oct 2021 — May 2025",
-    cgpa: "9.05 / 10",
+    cgpa: "7.88 / 10",
   },
 
   certifications: [

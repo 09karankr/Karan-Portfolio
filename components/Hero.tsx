@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, Github, Linkedin, Sparkles } from "lucide-react";
 import { profile } from "@/content/profile";
+import { XIcon } from "./XIcon";
 
 function openChat() {
   window.dispatchEvent(new Event("open-chat"));
@@ -63,6 +64,14 @@ export function Hero() {
             className="inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm text-muted hover:text-fg transition-colors"
           >
             <Linkedin className="size-4" /> LinkedIn
+          </a>
+          <a
+            href={profile.x}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm text-muted hover:text-fg transition-colors"
+          >
+            <XIcon className="size-3.5" /> X
           </a>
         </div>
       </motion.div>

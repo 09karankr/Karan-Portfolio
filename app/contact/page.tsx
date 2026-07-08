@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { CalendarClock, Github, Linkedin, Mail } from "lucide-react";
 import { Container } from "@/components/Container";
 import { ContactForm } from "@/components/ContactForm";
+import { XIcon } from "@/components/XIcon";
 import { profile } from "@/content/profile";
 import { calBookingUrl } from "@/lib/cal";
 
@@ -40,7 +41,7 @@ export default function ContactPage() {
         </a>
       )}
 
-      <div className="grid gap-3 mb-10 sm:grid-cols-3">
+      <div className="grid gap-3 mb-10 sm:grid-cols-2 lg:grid-cols-4">
         <a
           href={`mailto:${profile.email}`}
           className="flex items-center gap-3 rounded-lg border border-border bg-card/50 p-4 hover:border-accent/60 transition-colors"
@@ -65,6 +66,15 @@ export default function ContactPage() {
         >
           <Linkedin className="size-4 text-accent" />
           <span className="text-sm">LinkedIn</span>
+        </a>
+        <a
+          href={profile.x}
+          target="_blank"
+          rel="noreferrer"
+          className="flex items-center gap-3 rounded-lg border border-border bg-card/50 p-4 hover:border-accent/60 transition-colors"
+        >
+          <XIcon className="size-3.5 text-accent" />
+          <span className="text-sm">X (Twitter)</span>
         </a>
       </div>
 
